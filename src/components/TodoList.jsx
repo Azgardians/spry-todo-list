@@ -1,16 +1,11 @@
-import List from './List'
+import Board from './Board'
 import { Button } from "@/components/ui/button"
 
 function TodoList() {
   return (
-    <>
-      <h2 class="text-3xl font-bold underline">TodoList</h2>
-      <List />
-      <div className="flex flex-col items-center justify-center min-h-svh">
-        <Button>Click me</Button>
-      </div>
-
-    </>
+    <div className="w-full max-w-5xl rounded shadow sm:shadow-none p-10">
+      <Board />
+    </div>
   )
 }
 
