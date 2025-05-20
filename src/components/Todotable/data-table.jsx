@@ -55,7 +55,7 @@ export function DataTable({
       <div className="flex items-center py-4">
         <Input
           className="h-8 w-[150px] lg:w-[250px]"
-          placeHolder="Filter by title"
+          placeholder="Filter by title"
           value={(table.getColumn("title")?.getFilterValue()) ?? ""}
           onChange={(event) => table.getColumn("title").setFilterValue(event.target.value)}
         />

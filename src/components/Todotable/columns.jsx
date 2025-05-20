@@ -7,36 +7,49 @@ import {
 } from "@/components/ui/tooltip"
 import { format, parseISO } from 'date-fns';
 import { useDispatch } from "react-redux";
+// import { useState } from "react";
 import { deleteTodo, completeTodo } from "../../redux/todoSlice";
+import { toast } from "sonner";
+// import { ConfettiBurst } from "../confettiBurst";
 
 
 function ActionsCell({ row }) {
   const dispatch = useDispatch();
+  // const [showConfetti, setShowConfetti] = useState(false);
 
-  const handleDelete = (id) => {
-    dispatch(deleteTodo(id));
+  const handleDelete = (row) => {
+    dispatch(deleteTodo(row.id));
+    toast(row.title + " item deleted");
   };
 
-  const handleComplete = (id) => {
-    dispatch(completeTodo(id));
+  const handleComplete = (row) => {
+    dispatch(completeTodo(row.id));
+    toast(row.title + " item completed");
+    // setShowConfetti(true);
+    // setTimeout(() => setShowConfetti(false), 3000);
   };
 
   return (
     <div className="flex flex-row gap-2">
       <button
         className="p-1 rounded hover:bg-red-100"
-        onClick={() => handleDelete(row.original.id)}
+        onClick={() => handleDelete(row.original)}
         title="Delete"
       >
         <Trash2 className="w-4 h-4 text-red-500" />
       </button>
       <button
         className="p-1 rounded hover:bg-green-100"
-        onClick={() => handleComplete(row.original.id)}
+        onClick={() => handleComplete(row.original)}
         title="Mark as Complete"
       >
         <Check className="w-4 h-4 text-green-600" />
       </button>
+      {/* {showConfetti && (
+        <div className="absolute left-1/2 top-0 z-50">
+          <ConfettiBurst />
+        </div>
+      )} */}
     </div>
   );
 }

@@ -30,7 +30,6 @@ function Board() {
   ? `${overdueTodos.length} task${overdueTodos.length > 1 ? 's are' : ' is'} overdue`
   : "No overdue tasks";
 
-  console.log(columns);
   return (
     <>
       <div className="flex items-center justify-center min-h-screen px-4">
