@@ -6,7 +6,40 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { format, parseISO } from 'date-fns';
+import { useDispatch } from "react-redux";
+import { deleteTodo, completeTodo } from "../../redux/todoSlice";
 
+
+function ActionsCell({ row }) {
+  const dispatch = useDispatch();
+
+  const handleDelete = (id) => {
+    dispatch(deleteTodo(id));
+  };
+
+  const handleComplete = (id) => {
+    dispatch(completeTodo(id));
+  };
+
+  return (
+    <div className="flex flex-row gap-2">
+      <button
+        className="p-1 rounded hover:bg-red-100"
+        onClick={() => handleDelete(row.original.id)}
+        title="Delete"
+      >
+        <Trash2 className="w-4 h-4 text-red-500" />
+      </button>
+      <button
+        className="p-1 rounded hover:bg-green-100"
+        onClick={() => handleComplete(row.original.id)}
+        title="Mark as Complete"
+      >
+        <Check className="w-4 h-4 text-green-600" />
+      </button>
+    </div>
+  );
+}
 
 export const columns = [
   {
@@ -65,29 +98,11 @@ export const columns = [
   },
   {
     id: "actions",
-    cell: ({ row, handleActions }) => {
-
-      return (
-        <div className="flex flex-row gap-2">
-          <button
-            className="p-1 rounded hover:bg-red-100"
-            onClick={() => handleActions('DELETE', row.original.id)}
-            title="Delete"
-          >
-            <Trash2 className="w-4 h-4 text-red-500" />
-          </button>
-          <button
-            className="p-1 rounded hover:bg-green-100"
-            onClick={() => handleActions('COMPLETE', row.original.id)}
-            title="Mark as Complete"
-          >
-            <Check className="w-4 h-4 text-green-600" />
-          </button>
-        </div>
-      )
-    },
+    cell: ({ row }) => <ActionsCell row={row} />
   },
 ]
+
+export const completedColumns = columns.filter(item => item.id !== "actions");
 
 /*
 import { Button } from "@/components/ui/button"

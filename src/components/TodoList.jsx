@@ -1,10 +1,12 @@
 import Board from './Board'
-import { Button } from "@/components/ui/button"
+import { Toaster } from "@/components/ui/sonner"
+
 
 function TodoList() {
   return (
     <div className="w-full max-w-5xl rounded shadow sm:shadow-none p-10">
       <Board />
+      <Toaster />
     </div>
   )
 }

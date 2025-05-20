@@ -10,6 +10,9 @@ html, body, #root {
   position: relative;
   overflow: visible;
 }
+.min-h-tabs {
+  min-height: 38.25rem;
+}
 /* #root {
   max-width: 1280px;
   margin: 0 auto;
