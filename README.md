@@ -1,12 +1,67 @@
-# React + Vite
+# Spry Todo List
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, minimal, and responsive Todo List app built with React, Redux, and Tailwind CSS.
 
-Currently, two official plugins are available:
+![Screenshot](./src/assets/image.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- Add, edit, and delete todos
+- Mark tasks as complete or pending
+- Filter and sort todos by title, category, status, or due date
+- Responsive design for mobile and desktop
+- Overdue task highlighting
+- Pagination for large lists
+- Tooltips for long descriptions
+- Accessible and keyboard-friendly UI
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tech Stack
+
+- **React** – UI library
+- **Redux** – State management
+- **Tailwind CSS** – Utility-first styling
+- **shadcn/ui** – Accessible UI components
+- **date-fns** – Date formatting and parsing
+- **TanStack Table** – Advanced table features
+
+## Getting Started
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+2. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+3. Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+## Project Structure
+
+```
+src/
+  components/
+    Board.jsx
+    TodoList.jsx
+    Summary.jsx
+    todotable/
+      columns.jsx
+      data-table.jsx
+  redux/
+  assets/
+  App.jsx
+  main.jsx
+```
+
+## Customization
+
+- Update categories, statuses, and UI in the `columns.jsx` and Redux slice as needed.
+- Change the theme by editing Tailwind or shadcn/ui config.
+
+## License
+
+MIT
+
+---
+
+Made with ❤️ by azgardians
