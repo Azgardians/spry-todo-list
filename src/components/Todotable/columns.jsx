@@ -1,21 +1,65 @@
 import { Button } from "@/components/ui/button"
-import { Check, Trash2, ArrowUpIcon, ArrowDownIcon } from "lucide-react"
+import { Check, Trash2, ArrowUpIcon, ArrowDownIcon, EditIcon } from "lucide-react"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { format, parseISO } from 'date-fns';
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { useDispatch } from "react-redux";
-// import { useState } from "react";
-import { deleteTodo, completeTodo } from "../../redux/todoSlice";
+import { deleteTodo, completeTodo, updateTodo } from "../../redux/todoSlice";
 import { toast } from "sonner";
+import { useState } from 'react';
 // import { ConfettiBurst } from "../confettiBurst";
 
 
 function ActionsCell({ row }) {
   const dispatch = useDispatch();
   // const [showConfetti, setShowConfetti] = useState(false);
+  const [newTask, setNewTask] = useState({
+    id: row.original.id,
+    title: row.original.title,
+    description: row.original.description,
+    category: row.original.category,
+    dueDate: row.original.dueDate
+  });
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setNewTask(prev => ({
+      ...prev,
+      [id]: value
+    }));
+  };
+
+  const handleEdit = () => {
+    // Validate the form
+    if (!newTask.title || !newTask.description || !newTask.category || !newTask.dueDate) {
+      toast("Error in validation")
+      return;
+    }
+
+    // Format the date to ensure consistent ISO format
+    const formattedTask = {
+      ...newTask,
+      dueDate: newTask.dueDate // Already in YYYY-MM-DD format from input
+    };
+
+    // Dispatch the updateTodo action
+    dispatch(updateTodo(formattedTask));
+  };
 
   const handleDelete = (row) => {
     dispatch(deleteTodo(row.id));
@@ -31,6 +75,73 @@ function ActionsCell({ row }) {
 
   return (
     <div className="flex flex-row gap-2">
+      <Sheet>
+        <SheetTrigger asChild>
+          <button
+            className="p-1 rounded hover:bg-green-100"
+            title="Mark as Complete"
+          >
+            <EditIcon className="w-4 h-4 text-black" />
+          </button>
+        </SheetTrigger>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Edit Task</SheetTitle>
+          </SheetHeader>
+          <div className="grid gap-4 py-4 px-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="title" className="text-right">
+                Title
+              </Label>
+              <Input
+                id="title"
+                value={newTask.title}
+                onChange={handleInputChange}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="description" className="text-right">
+                Description
+              </Label>
+              <Input
+                id="description"
+                value={newTask.description}
+                onChange={handleInputChange}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="category" className="text-right">
+                Category
+              </Label>
+              <Input
+                id="category"
+                value={newTask.category}
+                onChange={handleInputChange}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="duedate" className="text-right">
+                Due
+              </Label>
+              <Input
+                id="dueDate"
+                value={newTask.dueDate}
+                onChange={handleInputChange}
+                type="date"
+                className="col-span-3"
+              />
+            </div>
+          </div>
+          <SheetFooter>
+            <SheetClose asChild>
+              <Button type="submit" onClick={handleEdit}>Save changes</Button>
+            </SheetClose>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
       <button
         className="p-1 rounded hover:bg-red-100"
         onClick={() => handleDelete(row.original)}
